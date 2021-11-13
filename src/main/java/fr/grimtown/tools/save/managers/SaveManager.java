@@ -9,8 +9,8 @@ import fr.grimtown.tools.save.classes.ConnectionSave;
 import fr.grimtown.tools.save.classes.DeathSave;
 import fr.grimtown.tools.save.classes.SavedInventory;
 
-import java.util.ArrayList;
-import java.util.UUID;
+import java.lang.reflect.InvocationTargetException;
+import java.util.*;
 
 public class SaveManager {
     private static final Datastore DATASTORE = Main.getDatastore(Main.getEvent().getDatabase());
@@ -18,18 +18,18 @@ public class SaveManager {
     /**
      * Get all deaths for this UUID of player
      */
-    public static ArrayList<DeathSave> getDeaths(UUID uuid) {
-        return new ArrayList<>(DATASTORE.find(DeathSave.class)
-                .filter(Filters.eq("uuid", uuid))
+    public static LinkedList<DeathSave> getDeaths(UUID uuid) {
+        return new LinkedList<>(DATASTORE.find(DeathSave.class)
+                .filter(Filters.eq("playerUuid", uuid))
                 .iterator().toList());
     }
 
     /**
      * Get all connections for this UUID of player
      */
-    public static ArrayList<ConnectionSave> getConnections(UUID uuid) {
-        return new ArrayList<>(DATASTORE.find(ConnectionSave.class)
-                .filter(Filters.eq("uuid", uuid))
+    public static LinkedList<ConnectionSave> getConnections(UUID uuid) {
+        return new LinkedList<>(DATASTORE.find(ConnectionSave.class)
+                .filter(Filters.eq("playerUuid", uuid))
                 .iterator().toList());
     }
 
@@ -38,7 +38,7 @@ public class SaveManager {
      */
     public static DeathSave getLastDeath(UUID uuid) {
         return DATASTORE.find(DeathSave.class)
-                .filter(Filters.eq("uuid", uuid))
+                .filter(Filters.eq("playerUuid", uuid))
                 .iterator(new FindOptions().sort(Sort.descending("_id")).limit(1)).tryNext();
     }
 
@@ -47,7 +47,7 @@ public class SaveManager {
      */
     public static ConnectionSave getLastConnection(UUID uuid) {
         return DATASTORE.find(ConnectionSave.class)
-                .filter(Filters.eq("uuid", uuid))
+                .filter(Filters.eq("playerUuid", uuid))
                 .iterator(new FindOptions().sort(Sort.descending("_id")).limit(1)).tryNext();
     }
 
@@ -59,6 +59,24 @@ public class SaveManager {
         ConnectionSave connectionSave = getLastConnection(uuid);
         if (deathSave.getDate().after(connectionSave.getDate())) return deathSave.getSavedInventory();
         else return connectionSave.getSavedInventory();
+    }
+
+    /**
+     * Get the last SavedInventory of uuid
+     */
+    public static LinkedList<Object> getSaves(UUID uuid) {
+        ArrayList<Object> inventories = new ArrayList<>();
+        inventories.addAll(getDeaths(uuid));
+        inventories.addAll(getConnections(uuid));
+        TreeMap<Date, Object> inventoriesMap = new TreeMap<>();
+        inventories.forEach(o -> {
+            try {
+                inventoriesMap.put ((Date) o.getClass().getMethod("getDate").invoke(o), o);
+            } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        });
+        return new LinkedList<>(inventoriesMap.values());
     }
 
     /**

@@ -38,19 +38,31 @@ public class DeathSave {
     }
 
     public Location getLocation() {
-        return Location.deserialize(location);
+        return location!=null ? Location.deserialize(location) : null;
     }
 
     public void setLocation(Location location) {
         this.location = location.serialize();
     }
 
+    public DamageCause getCause() {
+        return cause;
+    }
+
     public void setCause(DamageCause cause) {
         this.cause = cause;
     }
 
+    public UUID getKiller() {
+        return killer;
+    }
+
     public void setKiller(UUID killer) {
         this.killer = killer;
+    }
+
+    public String getKillerType() {
+        return killerType;
     }
 
     public void setKillerType(String killerType) {

@@ -1,4 +1,4 @@
-package fr.grimtown.tools.utils;
+package fr.grimtown.tools.utils.classes;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;

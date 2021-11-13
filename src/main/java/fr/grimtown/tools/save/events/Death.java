@@ -36,8 +36,8 @@ public class Death implements Listener {
                 } catch (Exception ignore) {}
             }
             deathSave.getSavedInventory().setArmor(armor);
-            deathSave.getSavedInventory().setInvB64(inv);
-            deathSave.getSavedInventory().setLevelsB64(levels);
+            deathSave.getSavedInventory().setInv(inv);
+            deathSave.getSavedInventory().setLevels(levels);
             SaveManager.save(deathSave);
         });
     }

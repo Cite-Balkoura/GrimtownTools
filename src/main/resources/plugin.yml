@@ -9,3 +9,7 @@ author: MileKat (tutur1004#8766)
 libraries:
   - org.mongodb:mongodb-driver-sync:4.3.2
   - dev.morphia.morphia:morphia-core:2.2.2
+commands:
+  inv:
+    description: "Save, Check or Restore an inventory"
+    permission: mods.inventory

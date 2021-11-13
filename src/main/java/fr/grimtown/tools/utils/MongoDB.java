@@ -9,6 +9,8 @@ import dev.morphia.Morphia;
 import dev.morphia.mapping.MapperOptions;
 import fr.grimtown.tools.save.classes.ConnectionSave;
 import fr.grimtown.tools.save.classes.DeathSave;
+import fr.grimtown.tools.utils.classes.Event;
+import fr.grimtown.tools.utils.classes.Profile;
 import org.bson.UuidRepresentation;
 import org.bukkit.configuration.Configuration;
 
@@ -43,7 +45,7 @@ public class MongoDB {
         Datastore datastore = Morphia.createDatastore(MongoClients.create(settings), dbName, MapperOptions.builder()
                 .enablePolymorphicQueries(true)
                 .build());
-        if (dbName.equalsIgnoreCase("master")) datastore.getMapper().map(Event.class);
+        if (dbName.equalsIgnoreCase("master")) datastore.getMapper().map(Profile.class, Event.class);
         else datastore.getMapper().map(ConnectionSave.class, DeathSave.class);
         datastore.ensureIndexes();
         datastore.ensureCaps();

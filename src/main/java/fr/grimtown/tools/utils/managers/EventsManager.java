@@ -1,8 +1,9 @@
-package fr.grimtown.tools.utils;
+package fr.grimtown.tools.utils.managers;
 
 import dev.morphia.Datastore;
 import dev.morphia.query.experimental.filters.Filters;
 import fr.grimtown.tools.Main;
+import fr.grimtown.tools.utils.classes.Event;
 
 public class EventsManager {
     private static final Datastore DATASTORE = Main.getDatastore("master");

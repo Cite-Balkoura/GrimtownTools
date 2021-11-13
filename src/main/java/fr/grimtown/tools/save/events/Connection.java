@@ -23,8 +23,8 @@ public class Connection implements Listener {
             ConnectionSave connectionSave = new ConnectionSave(event.getPlayer().getUniqueId(), new Date());
             connectionSave.setAction(ConnectionSave.Action.JOIN);
             connectionSave.getSavedInventory().setArmor(armor);
-            connectionSave.getSavedInventory().setInvB64(inv);
-            connectionSave.getSavedInventory().setLevelsB64(levels);
+            connectionSave.getSavedInventory().setInv(inv);
+            connectionSave.getSavedInventory().setLevels(levels);
             SaveManager.save(connectionSave);
         });
     }
@@ -38,8 +38,8 @@ public class Connection implements Listener {
             ConnectionSave connectionSave = new ConnectionSave(event.getPlayer().getUniqueId(), new Date());
             connectionSave.setAction(ConnectionSave.Action.LEAVE);
             connectionSave.getSavedInventory().setArmor(armor);
-            connectionSave.getSavedInventory().setInvB64(inv);
-            connectionSave.getSavedInventory().setLevelsB64(levels);
+            connectionSave.getSavedInventory().setInv(inv);
+            connectionSave.getSavedInventory().setLevels(levels);
             SaveManager.save(connectionSave);
         });
     }
