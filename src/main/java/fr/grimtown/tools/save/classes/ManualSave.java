@@ -8,23 +8,22 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity(value = "save")
-public class ConnectionSave {
+public class ManualSave {
     @Id
     private Object id;
     private UUID playerUuid;
     private Date date;
     private String server;
-    private Action action;
+    private UUID senderUuid;
     private SavedInventory savedInventory;
 
-    public enum Action { JOIN, LEAVE }
+    public ManualSave() {}
 
-    public ConnectionSave() {}
-
-    public ConnectionSave(UUID playerUuid, Date date) {
+    public ManualSave(UUID playerUuid, Date date, UUID senderUuid) {
         this.playerUuid = playerUuid;
         this.date = date;
         this.server = Bukkit.getServer().getName();
+        this.senderUuid = senderUuid;
         this.savedInventory = new SavedInventory();
     }
 
@@ -40,12 +39,8 @@ public class ConnectionSave {
         return server;
     }
 
-    public Action getAction() {
-        return action;
-    }
-
-    public void setAction(Action action) {
-        this.action = action;
+    public UUID getSenderUuid() {
+        return senderUuid;
     }
 
     public SavedInventory getSavedInventory() {

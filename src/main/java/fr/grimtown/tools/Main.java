@@ -5,15 +5,13 @@ import fr.grimtown.tools.save.SaveManagers;
 import fr.grimtown.tools.utils.MongoDB;
 import fr.grimtown.tools.utils.classes.Event;
 import fr.grimtown.tools.utils.managers.EventsManager;
+import fr.mrmicky.fastinv.FastInvManager;
 import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 
 public class Main extends JavaPlugin {
-    /* Core */
-    private static Plugin plugin;
     /* MongoDB */
     private static HashMap<String, Datastore> datastoreMap = new HashMap<>();
     /* Event */
@@ -21,7 +19,7 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        plugin = this;
+        FastInvManager.register(this);
         /* MongoDB */
         datastoreMap = MongoDB.getDatastoreMap(getConfig());
         /* Event load */
@@ -29,13 +27,6 @@ public class Main extends JavaPlugin {
         Bukkit.getLogger().info("Loaded event: " + mcEvent.getName());
         new SaveManagers(this);
         Bukkit.getPluginManager().registerEvents(new DamageModifiers(), this);
-    }
-
-    /**
-     * Get plugin shortcut
-     */
-    public static Plugin getPlugin() {
-        return plugin;
     }
 
     /**

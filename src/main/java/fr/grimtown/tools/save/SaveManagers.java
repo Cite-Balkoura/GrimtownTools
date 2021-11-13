@@ -1,6 +1,6 @@
 package fr.grimtown.tools.save;
 
-import fr.grimtown.tools.save.commands.Check;
+import fr.grimtown.tools.save.commands.InventoryCmd;
 import fr.grimtown.tools.save.events.Connection;
 import fr.grimtown.tools.save.events.Death;
 import org.bukkit.Bukkit;
@@ -12,8 +12,7 @@ public class SaveManagers {
         PluginManager pm = Bukkit.getServer().getPluginManager();
         pm.registerEvents(new Connection(), plugin);
         pm.registerEvents(new Death(), plugin);
-        //plugin.getCommand("inv").setExecutor(new Save());
-        plugin.getCommand("inv").setExecutor(new Check());
-        //plugin.getCommand("inv").setExecutor(new Restore());
+        plugin.getCommand("inventory").setExecutor(new InventoryCmd());
+        plugin.getCommand("inventory").setTabCompleter(new InventoryCmd());
     }
 }

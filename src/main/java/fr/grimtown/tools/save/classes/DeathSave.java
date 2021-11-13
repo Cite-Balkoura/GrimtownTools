@@ -2,6 +2,7 @@ package fr.grimtown.tools.save.classes;
 
 import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
@@ -15,6 +16,7 @@ public class DeathSave {
     private Object id;
     private UUID playerUuid;
     private Date date;
+    private String server;
     private Map<String, Object> location;
     private DamageCause cause;
     private UUID killer;
@@ -26,6 +28,7 @@ public class DeathSave {
     public DeathSave(UUID playerUuid, Date date) {
         this.playerUuid = playerUuid;
         this.date = date;
+        this.server = Bukkit.getServer().getName();
         this.savedInventory = new SavedInventory();
     }
 
@@ -71,5 +74,9 @@ public class DeathSave {
 
     public SavedInventory getSavedInventory() {
         return savedInventory;
+    }
+
+    public String getServer() {
+        return server;
     }
 }
